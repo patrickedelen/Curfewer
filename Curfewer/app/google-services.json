@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "45945011648",
+    "project_id": "curfewer"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45945011648:android:af306b53aa331942",
+        "android_client_info": {
+          "package_name": "com.pedelen.curfewer.curfewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45945011648-8l6gtf8c2co964eouakqa0q2in4hntn7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pedelen.curfewer.curfewer",
+            "certificate_hash": "9711EC2EA6411E3A933D3C30A1C39D4E9E50619C"
+          }
+        },
+        {
+          "client_id": "45945011648-h9jikf51f27hriia49cpefqfomjb2put.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3osML0W2EF0MHQXkQ2BQNOfNukEA41rM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
