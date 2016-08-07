@@ -13,9 +13,9 @@ xcs.on('message', function(messageId, from, data, category) {
     console.log('Recieved message', arguments);
 
     switch(messageId) {
-        case "UserLoginMessage": 
+        case "UserLoginMessage": //called from either flow, data {email: email, token: firebase token, role: parent or kid}
             console.log('User logged in');
-            Users.LoginUser(data, function(token) {
+            Users.loginUser(data, function(token) {
                 var message = new Message("UserLoggedIn")
                     .priority("high")
                     .dryRun(false)
@@ -32,9 +32,10 @@ xcs.on('message', function(messageId, from, data, category) {
                 });
             });
             break;
-        case "UpdateHomeMessage": //called from the parent flow, data {email: parent email, token: parent token, latitude}
+        case "UpdateHomeMessage": //called from the parent flow, data {email: parent email, token: parent token, latitude, longitude}
             console.log('User updated home');
-                Users.UpdateHome(data, function(token) {
+                Users.updateHome(data, function(token) {
+                    console.log(token);
                     var message = new Message("HomeSet")
                         .priority("high")
                         .dryRun(false)
@@ -54,7 +55,7 @@ xcs.on('message', function(messageId, from, data, category) {
             break;
         case "AddCurfew": //called from the parent flow, data {email: parent email, token: parent token, kidEmail: kid email string, date: curfew date object}
             console.log('Added new curfew');
-                Users.AddCurfew(data, function(token, kidToken, curfewDate) {
+                Users.addCurfew(data, function(token, kidToken, curfewDate) {
                     var message = new Message("CurfewSet")
                         .priority("high")
                         .dryRun(false)
@@ -226,8 +227,28 @@ xcs.on('message', function(messageId, from, data, category) {
             break;
 
             case "UpdateToken": //sent from either parent or child data {email: email, token: new token, role: Parent or Kid}
-            Users.LoginUser(data, function(token) {
+            Users.updateToken(data, function(token) {
                 console.log('Token updated');
+            });
+            break;
+            case "GetAll": //sent from either parent or child data {email: email, token: token, role: Parent or Kid}
+            Users.getAll(data, function(token, data) {
+                console.log(arguments);
+                var message = new Message("AllDataReturn")
+                        .priority("high")
+                        .dryRun(false)
+                        .addData("data", data)
+                        .deliveryReceiptRequested(true)
+                        .notification(notification)
+                        .build();
+
+                    xcs.sendNoRetry(message, token, function (result) {
+                        if (result.getError()) {
+                            console.error(result.getErrorDescription());
+                        } else {
+                            console.log("message sent: #" + result.getMessageId());
+                        }
+                    });
             });
             break;
             }
@@ -237,27 +258,3 @@ xcs.on('receipt', function(messageId, from, data, category) {
     console.log('received receipt', arguments);
 });
  
-var notification = new Notification("ic_launcher")
-    .title("Hello buddy!")
-    .body("node-xcs is awesome!!!")
-    .build();
- 
-var message = new Message("Data")
-    .priority("high")
-    .dryRun(false)
-    .addData("node-xcs", true)
-    .addData("anything_else", false)
-    .addData("awesomeness", 100)
-    .deliveryReceiptRequested(true)
-    .notification(notification)
-    .build();
-
-var clientToken = "dY9lbYylYFo:APA91bFEcAJi0F-tHajysdVn42Gajf8tpNifXS71xq3qvmnmQBnLqyIRx1qYoWFny9RBZcvJoPd8WV4RrpVbgpsRCJhuKnBPrP-8m63IWn895auXGJLheypMxxjBZWFM38DrxFR-1ZpO";
-
-xcs.sendNoRetry(message, clientToken, function (result) {
-    if (result.getError()) {
-        console.error(result.getErrorDescription());
-    } else {
-        console.log("message sent: #" + result.getMessageId());
-    }
-});

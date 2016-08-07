@@ -4,7 +4,7 @@ var kidSchema = new mongoose.Schema({
 	_email        : {type: String, unique: true},
     _token        : {type: String},
     _parentEmail  : {type: String},
-    accepted      : {type: boolean},
+    accepted      : {type: Boolean},
     Curfews: [{
         kidEmail: {type: String},
         date: {type: Date}
@@ -15,6 +15,5 @@ var kidSchema = new mongoose.Schema({
 	}],
 });
 
-parentSchema.index({ Home: '2dsphere' });
 
-module.exports = mongoose.model('Parent', parentSchema);
+module.exports = mongoose.model('Kid', kidSchema);

@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var modelKid = require('./models/kid.js');
 var modelParent = require('./models/parent.js');
 
-module.exports.LoginUser = function(data, callback) {
+module.exports.loginUser = function(data, callback) {
 
     if(data.role == 'Kid') {
         console.log('Kid login flow reached');
@@ -72,122 +72,126 @@ module.exports.LoginUser = function(data, callback) {
     }
 }
 
-module.exports.UpdateHome = function(data, callback) {
-    var parent = modelParent.find({"_email": data.email});
+module.exports.updateHome = function(data, callback) {
+    modelParent.findOne({"_email": data.email}).exec(function(err, doc) { 
 
-    parent.Home = {
-        type: 'Point',
-        coordinates: [data.longitude, data.latitude]
-    };
+        doc.Home = {
+            type: 'Point',
+            coordinates: [data.longitude, data.latitude]
+        };
 
-    modelParent.update(
-        {_email: data.email},
-        parent
-    );
-    console.log('Updated home');
-    callback(parent._token)
+        doc.save();
+        console.log('Updated home');
+        callback(doc._token);
+
+    });
+
+    
 }
 
-module.exports.AddCurfew = function(data, callback) {
-    var parent = modelParent.find({"_email": data.email});
+module.exports.addCurfew = function(data, callback) {
+    modelParent.findOne({"_email": data.email}).exec(function(err, docParent) { 
 
-    parent.Curfews.push({
+    docParent.Curfews.push({
         kidEmail: data.kidEmail,
         date: data.date
     });
 
-    modelParent.update(
-        {_email: data.email},
-        parent
-    );
+    docParent.save();
     console.log('Added new curfew');
 
     //update the kid
-    var kid = modelKid.find({"_email": data.kidEmail});
+    modelKid.findOne({"_email": data.kidEmail}).exec(function(err, docKid) {
+        
+        docKid.Curfews.push({
+            date: data.date
+        });
 
-    kid.Curfews.push({
-        date: data.date
+
+        docKid.save();
+        console.log('Updated kid');
+
+        callback(docParent._token, docKid._token, data.date);
+
+        });
+
     });
-
-    modelKid.update(
-        {_email: data.kidEmail},
-        kid
-    );
-
-    console.log('Updated kid');
-
-    callback(parent._token, kid._token, data.date);
 }
 
 module.exports.addChild = function(data, callback) {
     //update the kid
-    var kid = modelKid.find({"_email": data.kidEmail});
+    modelKid.findOne({"_email": data.kidEmail}).exec(function(err, docKid) {
+        docKid._parentEmail = data.email;
+        docKid.accepted = false;
 
-    kid._parentEmail = data.email;
-    kid.accepted = false;
+        docKid.save();
 
-    modelKid.update(
-        {_email: data.kidEmail},
-        kid
-    );
+        console.log('Added unverified parent to kid');
 
-    console.log('Added unverified parent to kid');
-
-    callback(kid._token, data.email);
+        callback(docKid._token, data.email);
+    });
 }
 
 module.exports.acceptParent = function(data, callback) {
     //update the kid
-    var kid = modelKid.find({"_email": data.email});
+    modelKid.findOne({"_email": data.email}).exec(function(err, docKid) { 
 
-    kid.accepted = true;
+        docKid.accepted = true;
+        docKid.save();
 
-    modelKid.update(
-        {_email: data.email},
-        kid
-    );
-    console.log('Verified parent');
+        console.log('Verified parent');
 
-    //add the kid to the parent
-    var parent = modelParent.find({"_email": data.email});
+        modelParent.findOne({"_email": docKid._parentEmail}).exec(function(err, docParent) {
 
-    parent.Kids.push({
-        kidEmail: data.email
+            docParent.Kids.push({
+                kidEmail: data.email
+            });
+
+            docParent.save();
+            console.log('Added the kid to the parent');
+
+            callback(docParent._token, data.email);
+        });
+
     });
-
-    modelParent.update(
-        {_email: data.email},
-        parent
-    );
-    console.log('Added the kid to the parent');
-
-    callback(parent._token, data.email);
 }
 
 module.exports.updateToken = function(data, callback) {
     if(data.role == "Kid") {
-        var kid = modelKid.find({"_email": data.kidEmail});
+        modelKid.findOne({"_email": data.email}).exec(function(err, docKid) {
+        
+            docKid._token = data.token;
 
-        kid._token = data.token;
+            docKid.save();
 
-        modelKid.update(
-            {_email: data.kidEmail},
-            kid
-        );
+            console.log('Updated kid token');
 
-        console.log('Updated parent token');
+            callback();
+        });
     } else if (data.role == "Parent") {
-        var parent = modelParent.find({"_email": data.email});
+        modelParent.findOne({"_email": data.email}).exec(function(err, docParent) {
+            
+            docParent._token = data.token;
 
-        parent._token = data.token;
+            docParent.save();
 
-        modelParent.update(
-            {_email: data.email},
-            parent
-        );
-        console.log('Updated parent token');
+            console.log('Updated parent token');
+
+            callback();
+        });
 
     }
-    
-    callback();
+}
+
+module.exports.getAll = function(data, callback) {
+     if(data.role == "Kid") {
+        modelKid.findOne({"_email": data.email}).exec(function(err, docKid) {
+            callback(docKit._token, docKid);
+        });
+    } else if (data.role == "Parent") {
+        modelParent.findOne({"_email": data.email}).exec(function(err, docParent) {
+            callback(docParent._token, docParent);
+        });
+
+    }
 }
