@@ -10,31 +10,30 @@
     tools:context="com.pedelen.curfewer.curfewer.IdentitySelect">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Child"
         android:id="@+id/button"
-        android:layout_marginTop="99dp"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textView2"
-        android:layout_toStartOf="@+id/textView2"
-        android:onClick="changeToAuth"/>
+        android:onClick="setChild"
+        android:layout_below="@+id/button2"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Parent"
         android:id="@+id/button2"
-        android:layout_alignTop="@+id/button"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
-        android:onClick="changeToAuth"/>
+        android:onClick="setParent"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Are you a?"
+        android:text="What are you?"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

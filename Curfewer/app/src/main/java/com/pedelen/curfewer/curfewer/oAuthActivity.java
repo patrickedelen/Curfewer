@@ -2,6 +2,7 @@ package com.pedelen.curfewer.curfewer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,8 @@ public class oAuthActivity extends AppCompatActivity implements
         private static final String TAG = "SignInActivity";
 
         private TextView mStatusTextView;
+        private TextView mRoleTextView;
+        public static final String PREFS = "test_prefs";
         private ProgressDialog mProgressDialog;
 
     @Override
@@ -36,6 +39,7 @@ public class oAuthActivity extends AppCompatActivity implements
 
         //text to show status
         mStatusTextView = (TextView) findViewById(R.id.status);
+        mRoleTextView = (TextView) findViewById(R.id.txtRole);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -106,7 +110,12 @@ public class oAuthActivity extends AppCompatActivity implements
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText(acct.getDisplayName());
+            mStatusTextView.setText("Welcome, " + acct.getDisplayName());
+
+            SharedPreferences getRole = getSharedPreferences(PREFS, 0);
+            String user_role = getRole.getString("user_role", "nothing, bitch");
+
+            mRoleTextView.setText("You are a " + user_role);
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI

@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'Curfewer'
             keyPassword 'bu5tAnut'
-            storeFile file('C:/Users/Patrick-XPS/AndroidStudioProjects/Curfewer/Keys.jks')
+            storeFile file('C:/Users/Mitch/AndroidStudioProjects/Curfewer/Curfewer/Keys.jks')
             storePassword 'bu5tAnut'
         }
     }
@@ -38,6 +38,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.android.support:design:24.1.1'
 }
+
 
 
 
