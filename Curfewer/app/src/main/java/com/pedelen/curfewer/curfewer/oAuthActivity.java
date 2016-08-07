@@ -110,12 +110,16 @@ public class oAuthActivity extends AppCompatActivity implements
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText("Welcome, " + acct.getDisplayName());
-
             SharedPreferences getRole = getSharedPreferences(PREFS, 0);
             String user_role = getRole.getString("user_role", "nothing, bitch");
+            Log.d("bacon", "MADE TO OAUTH");
+            if(user_role.equals("parent")) {
+                Log.d("bacon", "RENAVIGATING TO PARENT");
+                this.startActivity(new Intent(this, p_selectChild.class));
+            }
+           /* else
+                startActivity(new Intent(oAuthActivity.this, c_currectCurfews.class));*/
 
-            mRoleTextView.setText("You are a " + user_role);
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI
