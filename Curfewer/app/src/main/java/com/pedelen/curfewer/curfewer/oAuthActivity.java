@@ -38,7 +38,6 @@ public class oAuthActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_o_auth);
 
         //text to show status
-        mStatusTextView = (TextView) findViewById(R.id.status);
         mRoleTextView = (TextView) findViewById(R.id.txtRole);
 
         // Configure sign-in to request the user's ID, email address, and basic

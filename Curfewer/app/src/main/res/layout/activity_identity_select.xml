@@ -9,15 +9,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pedelen.curfewer.curfewer.IdentitySelect">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/curfewer_logo_final"
+        android:layout_marginTop="75dp"
+        android:layout_alignParentTop="true" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Child"
         android:id="@+id/button"
         android:onClick="setChild"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"
@@ -25,9 +33,9 @@
         android:text="Parent"
         android:id="@+id/button2"
         android:onClick="setParent"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,7 +43,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="What are you?"
         android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp" />
+        android:layout_marginBottom="25dp"
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
