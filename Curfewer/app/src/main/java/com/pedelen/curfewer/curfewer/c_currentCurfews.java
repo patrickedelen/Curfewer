@@ -60,36 +60,29 @@ public class c_currentCurfews extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.c_current_curfews);
 
-        btn_start = (Button) findViewById(R.id.start_service);
-        btn_stop = (Button) findViewById(R.id.stop_service);
+        //btn_start = (Button) findViewById(R.id.start_service);
+        //btn_stop = (Button) findViewById(R.id.stop_service);
         coords = (TextView) findViewById(R.id.coords);
 
         if(!runtime_permissions())
             enable_buttons();
     }
 
+    private static boolean gps_started = false;
     private void enable_buttons() {
 
-        btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        while(!gps_started) {
+            /** need to implement date object in two locations **/
+            if ((System.currentTimeMillis() + 10 * 1000)/* specify date object.getTime() here */ - System.currentTimeMillis() <= 7200000 && (System.currentTimeMillis() + 10 * 1000)/* specify date object.getTime() here */ - System.currentTimeMillis() > 0) {
+                Log.d("gps_loc", "Service Started");
                 startService(new Intent(getApplicationContext(), GPS_Service.class));
-            }
-        });
-
-        btn_stop.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
+                gps_started = true;
+            } else {
+                Log.d("gps_loc", "Service Stopped");
                 stopService(new Intent(getApplicationContext(), GPS_Service.class));
+                gps_started = false;
             }
-        });
-        
-
-       /* alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), GPS_Service.class);
-        alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, 500, alarmIntent);*/
+        }
     }
 /*
     private long getTime(){
