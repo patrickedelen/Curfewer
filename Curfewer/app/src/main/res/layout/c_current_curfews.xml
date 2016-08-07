@@ -28,6 +28,7 @@
         android:id="@+id/coords"
         android:layout_above="@+id/start_service"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="69dp" />
+        android:layout_marginBottom="300dp"
+        android:text="Coordinates:" />
 
 </RelativeLayout>

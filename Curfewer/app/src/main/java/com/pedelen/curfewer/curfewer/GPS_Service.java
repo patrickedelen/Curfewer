@@ -28,6 +28,8 @@ public class GPS_Service extends Service {
 
     @Override
     public void onCreate() {
+        Log.d("gps_loc", "GPS Service accessed");
+
         listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -43,7 +45,7 @@ public class GPS_Service extends Service {
 
             @Override
             public void onProviderEnabled(String provider) {
-
+                Log.d("gps_loc", "looking for location");
             }
 
             @Override
@@ -55,14 +57,14 @@ public class GPS_Service extends Service {
 
         };
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        Log.d("bacon", "Searching for GPS");
         //noinspection MissingPermission
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, listener);
 
     }
 
     @Override
     public void onDestroy() {
+        Log.d("gps_loc", "stopped looking for location");
         super.onDestroy();
         if(locationManager != null){
             //noinspection MissingPermission
