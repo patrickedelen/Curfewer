@@ -27,6 +27,11 @@
             ></activity>
         <activity android:name=".p_selectChild"
             ></activity>
+        <activity android:name=".c_currentCurfews"
+            ></activity>
+
+        <service android:enabled="true" android:name=".GPS_Service" />
+
     </application>
 
 

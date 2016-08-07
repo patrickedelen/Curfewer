@@ -115,10 +115,12 @@ public class oAuthActivity extends AppCompatActivity implements
             Log.d("bacon", "MADE TO OAUTH");
             if(user_role.equals("parent")) {
                 Log.d("bacon", "RENAVIGATING TO PARENT");
-                this.startActivity(new Intent(this, p_selectChild.class));
+                startActivity(new Intent(this, p_selectChild.class));
             }
-           /* else
-                startActivity(new Intent(oAuthActivity.this, c_currectCurfews.class));*/
+            else {
+                Log.d("bacon", "RENAVIGATING TO CHILD");
+                startActivity(new Intent(this, c_currentCurfews.class));
+            }
 
             updateUI(true);
         } else {
