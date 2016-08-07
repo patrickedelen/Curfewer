@@ -1,22 +1,20 @@
 package com.pedelen.curfewer.curfewer;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 /**
  * Created by Mitch on 8/7/2016.
  */
-public class c_acceptInvite extends AppCompatActivity {
+public class p_inviteSent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.c_accept_invite);
+        setContentView(R.layout.p_add_child);
     }
 
-    private void goBack() {
-        startActivity(new Intent(this, c_currentCurfews.class));
+    private void continueRunning() {
+        startActivity(new Intent(this, p_selectChild.class));
     }
+
 }
