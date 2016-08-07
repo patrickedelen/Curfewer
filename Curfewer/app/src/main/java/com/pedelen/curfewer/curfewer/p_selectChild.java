@@ -16,6 +16,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
+
 
 /**
  * Created by Mitch on 8/6/2016.
@@ -27,10 +33,19 @@ public class p_selectChild extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
 
+    public static String kidEmailPublic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
+
+
+
+
+
         setContentView(R.layout.p_select_child);
         set_home = (Button) findViewById(R.id.set_home_loc);
         gps_coords_res = (TextView) findViewById(R.id.lat_long);
@@ -39,6 +54,7 @@ public class p_selectChild extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 gps_coords_res.setText(location.getLatitude() +" "+ location.getLongitude());
+                FirebaseMessageService.updateHome(Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
             }
 
             @Override
@@ -86,9 +102,41 @@ public class p_selectChild extends AppCompatActivity {
     private void configureButton() {
         set_home.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
+                //noinspection MissingPermission
                 locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+          super.onStart();
+//        try {
+//            JSONArray kids = FirebaseMessageService.data.getJSONArray("Kids");
+//            Log.d("ChildList", "Kids " + kids.getJSONObject(0).getString("kidEmail"));
+//
+//            String kidString = kids.getJSONObject(0).getString("kidEmail");
+//
+//            kidEmailPublic = kidString;
+//
+//            TextView text = (TextView)findViewById(R.id.textView5);
+//            text.setText(kidString);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        TextView text = (TextView)findViewById(R.id.textView5);
+        text.setText("Mitch Gaines");
+    }
+
+    public void viewCurfews(View v) {
+        startActivity(new Intent(this, p_viewCurfew.class));
+    }
+    public void addCurfews(View v) {
+        startActivity(new Intent(this, p_setCurfew.class));
+    }
+    public void addChild(View v) {
+        startActivity(new Intent(this, p_addChild.class));
     }
 
 }

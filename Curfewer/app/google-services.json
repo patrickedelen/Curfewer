@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "45945011648",
-    "project_id": "curfewer"
+    "firebase_url": "https://curfewer.firebaseio.com",
+    "project_id": "curfewer",
+    "storage_bucket": "curfewer.appspot.com"
   },
   "client": [
     {
@@ -21,6 +23,10 @@
           }
         },
         {
+          "client_id": "45945011648-h1h3nbh10g2hprsno59puk2ej3dq39fk.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "45945011648-h9jikf51f27hriia49cpefqfomjb2put.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45945011648-h1h3nbh10g2hprsno59puk2ej3dq39fk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

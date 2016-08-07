@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'Curfewer'
             keyPassword 'bu5tAnut'
-            storeFile file('C:/Users/Mitch/AndroidStudioProjects/Curfewer/Curfewer/Keys.jks')
+            storeFile file('C:/Users/Patrick-XPS/Desktop/Projects/Curfewer/Curfewer/Keys.jks')
             storePassword 'bu5tAnut'
         }
     }
@@ -34,10 +34,15 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.android.gms:play-services-auth:9.4.0'
-    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.google.firebase:firebase-core:9.4.0'
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
+
 
 
 

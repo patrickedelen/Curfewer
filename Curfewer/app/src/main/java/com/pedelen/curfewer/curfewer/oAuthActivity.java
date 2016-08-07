@@ -3,6 +3,7 @@ package com.pedelen.curfewer.curfewer;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,13 +18,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class oAuthActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
 
         public GoogleApiClient mGoogleApiClient;
         private static final int RC_SIGN_IN = 9001;
-        private static final String TAG = "SignInActivity";
+        private static final String TAG = "OAuthActivity";
 
         private TextView mStatusTextView;
         private TextView mRoleTextView;
@@ -111,14 +113,37 @@ public class oAuthActivity extends AppCompatActivity implements
             GoogleSignInAccount acct = result.getSignInAccount();
             SharedPreferences getRole = getSharedPreferences(PREFS, 0);
             String user_role = getRole.getString("user_role", "nothing, bitch");
-            Log.d("bacon", "MADE TO OAUTH");
+            Log.d(TAG, "MADE TO OAUTH");
+
+            //get all user data
+            FirebaseMessageService.loginUser(acct.getEmail(), user_role);
+
+
             if(user_role.equals("parent")) {
-                Log.d("bacon", "RENAVIGATING TO PARENT");
-                startActivity(new Intent(this, p_selectChild.class));
+                Log.d(TAG, "RENAVIGATING TO PARENT");
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "RENAVIGATING TO PARENT");
+                        Intent i = new Intent(oAuthActivity.this, p_selectChild.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }, 2000);
             }
             else {
-                Log.d("bacon", "RENAVIGATING TO CHILD");
-                startActivity(new Intent(this, c_currentCurfews.class));
+                Log.d(TAG, "RENAVIGATING TO CHILD");
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "RENAVIGATING TO CHILD");
+                        Intent i = new Intent(oAuthActivity.this, c_currentCurfews.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }, 2000);
             }
 
             updateUI(true);
@@ -137,6 +162,7 @@ public class oAuthActivity extends AppCompatActivity implements
     private void updateUI(boolean b) {
         if (b) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+            findViewById(R.id.textLoading).setVisibility(View.VISIBLE);
         }
     }
 

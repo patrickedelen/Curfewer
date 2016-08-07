@@ -20,6 +20,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 
 /**
  * Created by Mitch on 8/6/2016.
@@ -116,5 +119,36 @@ public class c_currentCurfews extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        try {
+//            if(FirebaseMessageService.data.getJSONArray("Curfews")!= null) {
+//                try {
+//                    JSONArray curfews = FirebaseMessageService.data.getJSONArray("Curfews");
+//                    Log.d("ChildView", curfews.toString());
+//                    Log.d("CurrentCurfews", "Curfews " + curfews.getJSONObject(1).getString("date"));
+//
+//                    String curfewString = curfews.getJSONObject(1).getString("date");
+//
+//                    TextView text = (TextView)findViewById(R.id.textView7);
+//                    text.setText(curfewString);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        TextView text = (TextView)findViewById(R.id.textView7);
+        text.setText("No current curfews");
+    }
+
+    public void changeToAccept(View v) {
+        startActivity(new Intent(this, c_acceptInvite.class));
     }
 }

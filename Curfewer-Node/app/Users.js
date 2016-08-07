@@ -27,7 +27,7 @@ module.exports.loginUser = function(data, callback) {
                             if(err){
                                 console.log(err);
                             } else {
-                                callback(kidDocument._token);
+                                callback(kidDocument._token, kidDocument._email);
                             }
                         });
 					} catch (e) {
@@ -35,9 +35,8 @@ module.exports.loginUser = function(data, callback) {
 					};
 				} else {
 					console.log('User already added');
-                    callback(kidDocument._token);
+                    callback(kidDocument._token, kidDocument._email);
 				}
-                callback(kidDocument._token);
 		    });
 
     } else if(data.role == 'Parent') {
@@ -58,7 +57,7 @@ module.exports.loginUser = function(data, callback) {
                             if(err){
                                 console.log(err);
                             } else {
-                                callback(parentDocument._token);
+                                callback(parentDocument._token, parentDocument._email);
                             }
                         });
 					} catch (e) {
@@ -66,7 +65,7 @@ module.exports.loginUser = function(data, callback) {
 					};
 				} else {
 					console.log('User already added');
-                    callback(parentDocument._token);
+                    callback(parentDocument._token, parentDocument._email);
 				}
 		    });
     }
@@ -77,7 +76,7 @@ module.exports.updateHome = function(data, callback) {
 
         doc.Home = {
             type: 'Point',
-            coordinates: [data.longitude, data.latitude]
+            coordinates: [parseFloat(data.longitude), parseFloat(data.latitude)]
         };
 
         doc.save();
@@ -142,10 +141,12 @@ module.exports.acceptParent = function(data, callback) {
         console.log('Verified parent');
 
         modelParent.findOne({"_email": docKid._parentEmail}).exec(function(err, docParent) {
-
+           
             docParent.Kids.push({
                 kidEmail: data.email
             });
+
+            docParent.markModified('Kids'); 
 
             docParent.save();
             console.log('Added the kid to the parent');

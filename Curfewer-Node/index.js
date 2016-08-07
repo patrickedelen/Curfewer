@@ -26,14 +26,14 @@ var data = {
 };
 
 var loginData = {
-    email: 'kid@gmail.com',
+    email: 'gainesmitch2@gmail.com',
     token: '1234',
     role: 'Kid'
 }
 
 var parentData = {
     email: 'patrickedelen@gmail.com',
-    kidEmail: 'kid@gmail.com'
+    kidEmail: 'gainesmitch2@gmail.com'
 }
 var d = new Date();
 d.setMinutes(d.getMinutes() + 10);

@@ -38,6 +38,8 @@ public class IdentitySelect extends AppCompatActivity {
         startActivity(new Intent(IdentitySelect.this, oAuthActivity.class));
     }
 
+
+
     public void setChild(View v){
         //Log.d("debug", "Child Called");
         role = "child";
