@@ -28,7 +28,6 @@ public class GPS_Service extends Service {
 
     @Override
     public void onCreate() {
-        Log.d("gps_loc", "GPS Service accessed");
 
         listener = new LocationListener() {
             @Override
