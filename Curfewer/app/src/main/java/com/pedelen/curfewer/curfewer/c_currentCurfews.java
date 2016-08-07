@@ -66,7 +66,7 @@ public class c_currentCurfews extends AppCompatActivity {
     }
 
     private void enable_buttons() {
-        /*
+
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,16 +80,13 @@ public class c_currentCurfews extends AppCompatActivity {
                 stopService(new Intent(getApplicationContext(), GPS_Service.class));
             }
         });
-        */
+        
 
-
-        //alarmManager.set( AlarmManager.RTC_WAKEUP, getTime(), startService(new Intent(getApplicationContext(), GPS_Service.class)));
-
-        alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+       /* alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), GPS_Service.class);
         alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, 500, alarmIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, 500, alarmIntent);*/
     }
 /*
     private long getTime(){
