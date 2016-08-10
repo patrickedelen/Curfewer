@@ -111,6 +111,8 @@ public class p_selectChild extends AppCompatActivity {
     @Override
     public void onStart() {
           super.onStart();
+            TextView text = (TextView)findViewById(R.id.textView5);
+        //old code :{
 //        try {
 //            JSONArray kids = FirebaseMessageService.data.getJSONArray("Kids");
 //            Log.d("ChildList", "Kids " + kids.getJSONObject(0).getString("kidEmail"));
@@ -119,14 +121,19 @@ public class p_selectChild extends AppCompatActivity {
 //
 //            kidEmailPublic = kidString;
 //
-//            TextView text = (TextView)findViewById(R.id.textView5);
-//            text.setText(kidString);
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
 
-        TextView text = (TextView)findViewById(R.id.textView5);
-        text.setText("Mitch Gaines");
+        //check if getAll has returned code
+        if(FirebaseMessageService.kidEmails != null) {
+            String allKids = "";
+            for(String kidEmail : FirebaseMessageService.kidEmails) {
+                allKids += kidEmail + "\n";
+            }
+
+            text.setText(allKids);
+        }
     }
 
     public void viewCurfews(View v) {

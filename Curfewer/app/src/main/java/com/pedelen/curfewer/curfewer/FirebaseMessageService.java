@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -25,6 +26,9 @@ public class FirebaseMessageService extends FirebaseMessagingService {
     private static final String TAG = "FirebaseMessage";
 
     public static JSONObject data;
+    public static ArrayList<String> kidEmails = null;
+    public static Date[] curfews = null;
+
     public static final String PREFS = "test_prefs";
     public static String ROLE;
     public static String EMAIL;
@@ -38,15 +42,37 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         if(message.getData().get("type").equals("UserLoggedIn")) {
             getAllData();
         } else if(message.getData().get("type").equals("AllDataReturn")) {
-            try {
-                data = new JSONObject(message.getData().get("data"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Log.d(TAG, data.toString());
+            decodeJSON(message);
         } else {
             getAllData();
         }
+
+    }
+
+    private void decodeJSON(RemoteMessage message) {
+        try {
+            data = new JSONObject(message.getData().get("data"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, data.toString());
+
+        //decode JSONObjects to Strings, starting with kid emails
+
+        try {
+            kidEmails = new ArrayList<String>();
+
+            JSONArray kids = FirebaseMessageService.data.getJSONArray("Kids");
+            Log.d(TAG, "Kids " + kids.getJSONObject(0).getString("kidEmail"));
+
+            for(int i = 0; i < kids.length(); i ++) {
+                kidEmails.add(kids.getString(i));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
