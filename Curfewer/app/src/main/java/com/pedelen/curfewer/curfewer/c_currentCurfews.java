@@ -114,7 +114,7 @@ public class c_currentCurfews extends AppCompatActivity {
 
     }
 
-    @Override
+
     public void onStart() {
         super.onStart();
 //        try {
