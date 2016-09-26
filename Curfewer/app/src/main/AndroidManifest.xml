@@ -38,8 +38,6 @@
         <activity android:name=".p_addChild"
             ></activity>
 
-        <service android:enabled="true" android:name=".GPS_Service" />
-
         <service
             android:name="com.pedelen.curfewer.curfewer.FirebaseMessageService">
             <intent-filter>
